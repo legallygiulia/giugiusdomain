@@ -1,0 +1,100 @@
+import { useState } from 'react';
+import { Calendar } from '@/components/ui/calendar';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Select, SelectItem } from '@/components/ui/select';
+
+export default function NailSalonBooking() {
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [selectedTime, setSelectedTime] = useState<string>('');
+  const [availableDates, setAvailableDates] = useState<Date[]>([new Date()]);
+  const [availableTimes, setAvailableTimes] = useState<string[]>([
+    '09:00 AM', '10:00 AM', '11:00 AM', '01:00 PM', '02:00 PM', '03:00 PM'
+  ]);
+  const [bookings, setBookings] = useState<{ date: string, time: string }[]>([]);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date && availableDates.some(d => d.toDateString() === date.toDateString())) {
+      setSelectedDate(date);
+    } else {
+      alert('This date is not available.');
+    }
+  };
+
+  const handleBooking = () => {
+    if (selectedDate && selectedTime) {
+      setBookings([...bookings, { date: selectedDate.toDateString(), time: selectedTime }]);
+      alert(`Appointment booked for ${selectedDate.toDateString()} at ${selectedTime}`);
+    } else {
+      alert('Please select both a date and time.');
+    }
+  };
+
+  const toggleAdmin = () => setIsAdmin(!isAdmin);
+
+  const addAvailability = () => {
+    if (selectedDate && !availableDates.some(d => d.toDateString() === selectedDate.toDateString())) {
+      setAvailableDates([...availableDates, selectedDate]);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-pink-50">
+      <Card className="w-full max-w-md shadow-lg rounded-2xl">
+        <CardContent className="p-6">
+          <h1 className="text-2xl font-bold mb-4 text-center text-pink-700">{isAdmin ? 'Admin Panel' : 'Book Your Nail Appointment'}</h1>
+
+          <Calendar
+            mode="single"
+            selected={selectedDate}
+            onSelect={handleDateSelect}
+            className="rounded-md border shadow"
+          />
+
+          {isAdmin ? (
+            <div className="mt-4 text-center">
+              <Button onClick={addAvailability} className="bg-green-600 hover:bg-green-700 mt-2">
+                Add to Availability
+              </Button>
+              <h2 className="mt-4 font-semibold">Current Available Dates:</h2>
+              <ul className="text-sm text-left">
+                {availableDates.map((date, idx) => (
+                  <li key={idx}>{date.toDateString()}</li>
+                ))}
+              </ul>
+              <h2 className="mt-4 font-semibold">Booked Appointments:</h2>
+              <ul className="text-sm text-left">
+                {bookings.map((b, idx) => (
+                  <li key={idx}>{b.date} at {b.time}</li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            selectedDate && (
+              <div className="mt-4 text-center">
+                <p>Selected Date: {selectedDate.toDateString()}</p>
+                <Select value={selectedTime} onValueChange={setSelectedTime} className="mt-2">
+                  {availableTimes.map((time, idx) => (
+                    <SelectItem key={idx} value={time}>
+                      {time}
+                    </SelectItem>
+                  ))}
+                </Select>
+                <Button onClick={handleBooking} className="mt-2 bg-pink-600 hover:bg-pink-700">
+                  Confirm Appointment
+                </Button>
+              </div>
+            )
+          )}
+
+          <div className="mt-6 text-center">
+            <Button onClick={toggleAdmin} className="text-sm underline text-pink-500 hover:text-pink-700" variant="ghost">
+              {isAdmin ? 'Switch to Booking View' : 'Switch to Admin Panel'}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

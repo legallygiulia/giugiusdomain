@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Una giornata nella provincia di Novara</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        h1 {
+            color: #e84a5f;
+            margin-bottom: 1.5rem;
+        }
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .highlight {
+            color: #e84a5f;
+            font-weight: bold;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-yes {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .btn-yes:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+        .btn-no {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .btn-no:hover {
+            cursor: not-allowed;
+            animation: shake 0.5s;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .progress {
+            width: 100%;
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #e84a5f;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        .timeline {
+            text-align: left;
+            margin: 1.5rem 0;
+        }
+        .timeline-item {
+            padding-left: 20px;
+            border-left: 2px solid #e84a5f;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: #e84a5f;
+        }
+        .timeline-time {
+            font-weight: bold;
+            color: #e84a5f;
+        }
+        .image-placeholder {
+            background-color: #f9d5e5;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+            border-radius: 10px;
+            color: #e84a5f;
+            font-weight: bold;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+        .farewell {
+            font-style: italic;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- Page 1 -->
+        <div class="page active" id="page1">
+            <h1>Una giornata nella provincia di Novara</h1>
+            <div class="image-placeholder">🌷 Fiori, buon cibo e amiche 🌷</div>
+            <p>Voici ton rappel régulier pour te dire à quel point je t'apprécie et que tu me manques tellement!</p>
+            <p class="highlight">Cela fait des semaines qu'on ne s'est pas vu</p>
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="nextPage(1)">Sì, è vero!</button>
+                <button class="btn btn-no" onclick="shakeButton(this)">No</button>
+            </div>
+        </div>
+
+        <!-- Page 2 -->
+        <div class="page" id="page2">
+            <h1>Come passeremo la mattinata?</h1>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-time">11:00</span> - Tu arrives à la gare de Novara
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">11:10</span> - On part avec la voiture et on va à la Picchetta (Cameri)
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">11:30</span> - On arrive à la Picchetta et on rentre dans le champ des tulipes
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">11:30 - 12:30</span> - On ramasse des fleurs, on prend des photos, eccetera
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">12:30 - 13:00</span> - On se balade à la Picchetta, dans les bois, on voit la rivière
+                </div>
+            </div>
+            <p class="highlight">Ti piace questo programma?</p>
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="nextPage(2)">Sì, mi piace!</button>
+                <button class="btn btn-no" onclick="shakeButton(this)">No</button>
+            </div>
+        </div>
+
+        <!-- Page 3 -->
+        <div class="page" id="page3">
+            <h1>Déjeuner - 13:00</h1>
+            <div class="image-placeholder">🍝 Osteria della Picchetta 🍷</div>
+            <p>Déjeuner à "Osteria della Picchetta"</p>
+            <p class="highlight">Pago io!</p>
+            <p>Vuoi venire a pranzo con me?</p>
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="nextPage(3)">Sì, certo!</button>
+                <button class="btn btn-no" onclick="shakeButton(this)">No</button>
+            </div>
+        </div>
+
+        <!-- Page 4 -->
+        <div class="page" id="page4">
+            <h1>Novara nel pomeriggio</h1>
+            <p>On rentre à Novara pour un tour de la ville et un café avec des amies.</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="timeline-time">15:00</span> - Alice
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">16:30</span> - Eleonora
+                </div>
+            </div>
+            <h2>Qu'est-ce qu'on va voir?</h2>
+            <ul style="text-align: left; list-style-type: none;">
+                <li>✓ La Cupola</li>
+                <li>✓ Le Broletto</li>
+                <li>✓ Mon lycée (random)</li>
+                <li>✓ Le centre-ville</li>
+            </ul>
+            <p class="highlight">Ti interessa questo giro turistico?</p>
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="nextPage(4)">Sì, andiamo!</button>
+                <button class="btn btn-no" onclick="shakeButton(this)">No</button>
+            </div>
+        </div>
+
+        <!-- Page 5 -->
+        <div class="page" id="page5">
+            <h1>È bientôt le moment des adieux...</h1>
+            <div class="image-placeholder">👋 Arrivederci 👋</div>
+            <p>Mais ne t'inquiète pas, on va se revoir dans une semaine (ou mieux 10 jours, mais qui compte?).</p>
+            <p class="highlight">Ti è piaciuta questa giornata a Novara?</p>
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="nextPage(5)">Sì, è stata bellissima!</button>
+                <button class="btn btn-no" onclick="shakeButton(this)">No</button>
+            </div>
+        </div>
+
+        <!-- Final Page -->
+        <div class="page" id="page6">
+            <h1>Grazie per aver accettato questo invito!</h1>
+            <div class="image-placeholder">❤️ À bientôt! ❤️</div>
+            <p>Sono felice che tu abbia deciso di passare questa giornata con me nella provincia di Novara.</p>
+            <p class="highlight">Non vedo l'ora di vederti!</p>
+            <p class="farewell">Ci vediamo presto per fiori, buon cibo e amiche!</p>
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="resetPages()">Ricomincia</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 6;
+        
+        function updateProgressBar() {
+            const percentage = ((currentPage - 1) / (totalPages - 1)) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+        
+        function nextPage(pageNum) {
+            document.getElementById('page' + pageNum).classList.remove('active');
+            currentPage = pageNum + 1;
+            document.getElementById('page' + currentPage).classList.add('active');
+            updateProgressBar();
+        }
+        
+        function shakeButton(button) {
+            button.style.animation = 'none';
+            setTimeout(() => {
+                button.style.animation = 'shake 0.5s';
+            }, 10);
+            
+            // Make the button move away from cursor
+            button.addEventListener('mouseover', moveButton);
+        }
+        
+        function moveButton(e) {
+            const button = e.target;
+            const container = button.closest('.container');
+            const containerRect = container.getBoundingClientRect();
+            
+            // Calculate new position
+            let newX = Math.random() * (containerRect.width - 150);
+            let newY = Math.random() * (containerRect.height - 50);
+            
+            // Ensure button stays within container
+            newX = Math.max(0, Math.min(newX, containerRect.width - 150));
+            newY = Math.max(0, Math.min(newY, containerRect.height - 50));
+            
+            button.style.position = 'absolute';
+            button.style.left = newX + 'px';
+            button.style.top = newY + 'px';
+        }
+        
+        function resetPages() {
+            for (let i = 1; i <= totalPages; i++) {
+                document.getElementById('page' + i).classList.remove('active');
+            }
+            currentPage = 1;
+            document.getElementById('page1').classList.add('active');
+            updateProgressBar();
+        }
+        
+        // Initialize progress bar
+        updateProgressBar();
+    </script>
+</body>
+</html>
